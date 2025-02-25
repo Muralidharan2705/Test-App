@@ -7,7 +7,10 @@ pipeline {
         jdk 'JDK-17'
     }
 
-   
+    environments {
+
+        $docker_name = "Test-App"
+        $tag_name = "latest"  
 
     stages {
         stage('Checkout') {
@@ -32,7 +35,12 @@ pipeline {
                 archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
             }
         }
+       stage ('Build docker image') {
+         steps {
+             scripts {
+                   sh 'docker build -t ${docker_image}:${tag_name}'
     }
+
 
     post {
         always {
