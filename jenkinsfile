@@ -10,7 +10,7 @@ pipeline {
         // Define environment variables
         DOCKER_IMAGE_NAME = 'my-java-app'
         DOCKER_IMAGE_TAG = 'latest'
-        MAVEN_HOME = '/opt/maven'  // Set Maven home if using Maven
+        dockerHubUser= 'muralidharan2705'       
     }
 
    /* environment {
@@ -52,6 +52,18 @@ pipeline {
                 }
             }
         }
+        stage ('Push docker image') {
+         steps {
+             scripts {
+                   sh '''
+				     withCredentials([string(credentialsId: 'Docker-Hub', variable: 'credential')])
+                      docker login -u ${dockerHubUser} -p ${env.credential}
+					  docker tag ${docker_image}:${tag_name} {docker_image}:${tag_name}
+					  docker build -t ${docker_image}:${tag_name}
+					  '''
+					}
+				}
+			}    
       }
 
 
