@@ -1,0 +1,51 @@
+pipeline {
+    agent any 
+	  tools {
+	     maven 'maven3'
+		}
+		
+		environment {
+		
+		    JAVA_HOME = '/usr/lib/jvm/java-17-openjdk-amd64'
+			}
+			
+		  stages {
+		   stage('checkout') {
+				steps {
+	                  sh 'echo passed'			
+					//git branch : 'main',url: "https://github.com/Muralidharan2705/Test-App.git"
+					}
+				}
+        				
+			stage ('Build Maven') {
+			  step {
+			    scripts {
+				  echo "running build package using maven"
+				  sh "'${tool 'Maven3'}/bin/java
+				  }
+				 }
+				}
+			
+			stage('Archive Artifacts') {
+            steps {
+                // Archive the resulting build artifact (e.g., JAR, WAR)
+                archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true  // Adjust based on your packaging
+            }
+        }
+    }
+	
+	post {
+        always {
+            echo 'Cleaning up...'
+            // You can include any cleanup tasks here, if necessary
+        }
+
+        success {
+            echo 'Build and packaging completed successfully!'
+        }
+
+        failure {
+            echo 'Build failed. Check the logs for errors!'
+        }
+    }
+}
