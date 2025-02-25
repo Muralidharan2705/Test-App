@@ -70,7 +70,7 @@ pipeline {
                      // sh "docker login -u ${dockerHubUser} -p ${DOCKER_HUB_PASSWORD}"
                         
                         // Tag and push the Docker image to Docker Hub
-                        sh "docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG  ${dockerHubUser}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
+                        sh "docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}  ${dockerHubUser}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
                         //sh "docker push ${dockerHubUser}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
 				}
                            }
