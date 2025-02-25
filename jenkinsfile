@@ -55,10 +55,11 @@ pipeline {
         stage ('Push docker image') {
          steps {
              scripts {
-                   sh '''
-				     withCredentials([string(credentialsId: 'Docker-Hub', variable: 'credential')])
-                      docker login -u ${dockerHubUser} -p ${env.credential}
-					  docker tag ${docker_image}:${tag_name} {docker_image}:${tag_name}
+                   
+                          withCredentials([string(credentialsId: 'Docker-Hub', variable: 'DOCKER_HUB_PASSWORD')]){
+                     sh '''
+                      docker login -u ${dockerHubUser} -p ${DOCKER_HUB_PASSWORD}
+		  docker tag ${docker_image}:${tag_name} {docker_image}:${tag_name}
 					  docker build -t ${docker_image}:${tag_name}
 					  '''
 					}
