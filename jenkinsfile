@@ -21,7 +21,7 @@ pipeline {
 			  step {
 			    scripts {
 				  echo "running build package using maven"
-				  sh "'${tool 'Maven3'}/bin/java
+				  sh "'${tool 'Maven3'}/bin/mvn' clean package"
 				  }
 				 }
 				}
