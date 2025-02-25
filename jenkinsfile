@@ -7,11 +7,11 @@ pipeline {
         jdk 'JDK-17'
     }
 
-    environment {
+   /* environment {
 
         docker_image = "Test-App"
         tag_name = "latest"
-      }  
+      } */  
 
     stages {
         stage('Checkout') {
@@ -39,7 +39,7 @@ pipeline {
        stage ('Build docker image') {
          steps {
              scripts {
-                   sh 'docker build -t ${docker_image}:${tag_name} . '
+                   sh 'docker build -t myapp:latest .'
          }
       }
     }
