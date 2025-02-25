@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     tools {
-        // Use the Maven tool defined in Jenkins Global Tool Configuration
-        maven 'maven'  // Replace with the name of your Maven installation in Jenkins
+        /* Use the Maven tool defined in Jenkins Global Tool Configuration */
+        maven 'maven'  /* Replace with the name of your Maven installation in Jenkins */
     }
 
     environment {
@@ -15,25 +15,22 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout code from your repository
-               sh 'echo passed'
-                //git 'https://github.com/Muralidharan2705/Test-App.git'  // Replace with your repo URL
+                git 'https://github.com/Muralidharan2705/Test-App.git'  // Replace with your repo URL
             }
         }
 
         stage('Build and Package') {
             steps {
-                // Run Maven clean and package using Jenkins Maven Plugin
                 script {
                     echo 'Running Maven clean and package...'
-                    sh "'${tool 'maven'}/bin/mvn' clean package"  // Using the Maven tool configured in Jenkins
+                    sh "${tool 'maven'}/bin/mvn clean package"  // Corrected command
                 }
             }
         }
 
         stage('Archive Artifacts') {
             steps {
-                // Archive the resulting build artifact (e.g., JAR, WAR)
-                archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true  // Adjust based on your packaging
+                archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
             }
         }
     }
@@ -41,7 +38,6 @@ pipeline {
     post {
         always {
             echo 'Cleaning up...'
-            // You can include any cleanup tasks here, if necessary
         }
 
         success {
