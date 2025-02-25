@@ -1,40 +1,42 @@
 pipeline {
-    agent any 
-	  tools {
-	     maven 'maven3'
-		}
-		
-		environment {
-		
-		    JAVA_HOME = '/usr/lib/jvm/java-17-openjdk-amd64'
-			}
-			
-		  stages {
-		   stage('checkout') {
-				steps {
-	                  sh 'echo passed'			
-					//git branch : 'main',url: "https://github.com/Muralidharan2705/Test-App.git"
-					}
-				}
-        				
-			stage ('Build Maven') {
-			  step {
-			    scripts {
-				  echo "running build package using maven"
-				  sh "'${tool 'Maven3'}/bin/mvn' clean package"
-				  }
-				 }
-				}
-			
-			stage('Archive Artifacts') {
+    agent any
+
+    tools {
+        // Use the Maven tool defined in Jenkins Global Tool Configuration
+        maven 'Maven3'  // Replace with the name of your Maven installation in Jenkins
+    }
+
+    environment {
+        JAVA_HOME = '/usr/lib/jvm/java-11-openjdk'  // Adjust to your Java installation path
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout code from your repository
+                git 'https://github.com/your-repository-url.git'  // Replace with your repo URL
+            }
+        }
+
+        stage('Build and Package') {
+            steps {
+                // Run Maven clean and package using Jenkins Maven Plugin
+                script {
+                    echo 'Running Maven clean and package...'
+                    sh "'${tool 'Maven3'}/bin/mvn' clean package"  // Using the Maven tool configured in Jenkins
+                }
+            }
+        }
+
+        stage('Archive Artifacts') {
             steps {
                 // Archive the resulting build artifact (e.g., JAR, WAR)
                 archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true  // Adjust based on your packaging
             }
         }
     }
-	
-	post {
+
+    post {
         always {
             echo 'Cleaning up...'
             // You can include any cleanup tasks here, if necessary
