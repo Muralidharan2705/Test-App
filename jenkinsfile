@@ -6,6 +6,12 @@ pipeline {
         maven 'maven'  /* Replace with the name of your Maven installation in Jenkins */
         jdk 'JDK-17'
     }
+    environment {
+        // Define environment variables
+        DOCKER_IMAGE_NAME = 'my-java-app'
+        DOCKER_IMAGE_TAG = 'latest'
+        MAVEN_HOME = '/opt/maven'  // Set Maven home if using Maven
+    }
 
    /* environment {
 
@@ -36,14 +42,17 @@ pipeline {
                 archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
             }
         }
-       stage ('Build docker image') {
-         steps {
-             scripts {
-                   sh 'docker build -t myapp:latest .'
-         }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    // Build the Docker image with the JAR inside
+                    sh '''
+                    docker build -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} .
+                    '''
+                }
+            }
+        }
       }
-    }
- }
 
 
     post {
