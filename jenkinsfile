@@ -10,7 +10,8 @@ pipeline {
     environment {
 
         $docker_name = "Test-App"
-        $tag_name = "latest"  
+        $tag_name = "latest"
+      }  
 
     stages {
         stage('Checkout') {
