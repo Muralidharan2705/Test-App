@@ -9,8 +9,8 @@ pipeline {
 
     environment {
 
-        $docker_name = "Test-App"
-        $tag_name = "latest"
+        docker_image = "Test-App"
+        tag_name = "latest"
       }  
 
     stages {
