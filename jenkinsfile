@@ -4,12 +4,10 @@ pipeline {
     tools {
         /* Use the Maven tool defined in Jenkins Global Tool Configuration */
         maven 'maven'  /* Replace with the name of your Maven installation in Jenkins */
+        jdk 'JDK-17'
     }
 
-    environment {
-        JAVA_HOME = '/usr/lib/jvm/java-17-openjdk'  // Adjust to your Java installation path
-        PATH = "${JAVA_HOME}/bin:${env.PATH}"
-    }
+   
 
     stages {
         stage('Checkout') {
