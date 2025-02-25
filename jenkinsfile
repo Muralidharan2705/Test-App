@@ -8,6 +8,7 @@ pipeline {
 
     environment {
         JAVA_HOME = '/usr/lib/jvm/java-17-openjdk'  // Adjust to your Java installation path
+        PATH = "${JAVA_HOME}/bin:${env.PATH}"
     }
 
     stages {
