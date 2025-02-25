@@ -40,7 +40,10 @@ pipeline {
          steps {
              scripts {
                    sh 'docker build -t ${docker_image}:${tag_name} . '
+         }
+      }
     }
+ }
 
 
     post {
