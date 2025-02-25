@@ -13,7 +13,8 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout code from your repository
-                git 'https://github.com/Muralidharan2705/Test-App.git'  // Replace with your repo URL
+                //git 'https://github.com/Muralidharan2705/Test-App.git'  // Replace with your repo URL
+                sh 'echo passed'
             }
         }
 
