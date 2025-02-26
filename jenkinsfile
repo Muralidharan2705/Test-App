@@ -8,7 +8,7 @@ pipeline {
     }
     environment {
         // Define environment variables
-        DOCKER_IMAGE_NAME = 'my-java-app'
+        DOCKER_IMAGE_NAME = 'muralidharan2705/my-java-app'
         DOCKER_IMAGE_TAG = 'latest'
         dockerHubUser= 'muralidharan2705'       
     }
