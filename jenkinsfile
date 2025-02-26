@@ -11,8 +11,8 @@ pipeline {
         DOCKER_IMAGE_NAME = 'muralidharan2705/my-java-app'
         DOCKER_IMAGE_TAG = 'latest'
         dockerHubUser= 'muralidharan2705'
-        registry = 'muralidharan2705/my-java-app'
-        registryCredential = 'Docker_Login_PWD'       
+       // registry = 'muralidharan2705/my-java-app'
+        //registryCredential = 'Docker_Login_PWD'       
     }
 
    /* environment {
@@ -73,11 +73,11 @@ pipeline {
                     //}
                    
                         //  withCredentials([string(credentialsId: 'Docker-Hub', variable: 'DOCKER_HUB_PASSWORD')]){
-                     sh "docker login -u muralidharan2705  -p Vini2493!"
+                     sh 'docker login'
                         
                         // Tag and push the Docker image to Docker Hub
                         //sh "docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}  ${dockerHubUser}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
-                        sh "docker push ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
+                        sh 'docker push ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}'
 				}
                            }
 			}    
