@@ -11,17 +11,10 @@ pipeline {
         DOCKER_IMAGE_NAME = 'muralidharan2705/my-java-app'
         DOCKER_IMAGE_TAG = 'latest'
         dockerHubUser= 'muralidharan2705'
-       // registry = 'muralidharan2705/my-java-app'
-        //registryCredential = 'Docker_Login_PWD'       
+              
     }
 
-   /* environment {
-
-        docker_image = "Test-App"
-        tag_name = "latest"
-      } */  
-
-    stages {
+   stages {
         stage('Checkout') {
             steps {
                 // Checkout code from your repository
@@ -50,8 +43,7 @@ pipeline {
                     // Build the Docker image with the JAR inside
                     sh '''
                     docker build -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} .
-                    // dockerImage = docker.build("${registry}:${BUILD_NUMBER}")
-                    '''
+                     '''
                 }
             }
         }
@@ -68,18 +60,14 @@ pipeline {
         stage ('Push docker image') {
          steps {
              scripts {
-                       //docker.withRegistry('https://hub.docker.com/', registryCredential) {
-                        //dockerImage.push()
-                    //}
-                   
-                        //  withCredentials([string(credentialsId: 'Docker-Hub', variable: 'DOCKER_HUB_PASSWORD')]){
+                                   
+                       
                      sh 'docker login'
                         
                         // Tag and push the Docker image to Docker Hub
                         //sh "docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}  ${dockerHubUser}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
                         sh 'docker push ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}'
-				}
-                           }
+			  }
 			}    
       }
 
