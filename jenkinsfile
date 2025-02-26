@@ -10,7 +10,9 @@ pipeline {
         // Define environment variables
         DOCKER_IMAGE_NAME = 'muralidharan2705/my-java-app'
         DOCKER_IMAGE_TAG = 'latest'
-        dockerHubUser= 'muralidharan2705'       
+        dockerHubUser= 'muralidharan2705'
+        registry = 'muralidharan2705/my-java-app'
+        registryCredential = 'Docker_Login_PWD'       
     }
 
    /* environment {
@@ -47,12 +49,13 @@ pipeline {
                 script {
                     // Build the Docker image with the JAR inside
                     sh '''
-                    docker build -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} .
+                    //docker build -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} .
+                     dockerImage = docker.build("${registry}:${BUILD_NUMBER}")
                     '''
                 }
             }
         }
-        stage('Docker Login') {
+       /* stage('Docker Login') {
             steps {
                 script {
                     // Use the stored Docker access token to login
@@ -61,17 +64,20 @@ pipeline {
                     }
                 }
             }
-         }
+         } */
         stage ('Push docker image') {
          steps {
              scripts {
+                       docker.withRegistry('https://hub.docker.com/', registryCredential) {
+                        dockerImage.push()
+                    }
                    
                         //  withCredentials([string(credentialsId: 'Docker-Hub', variable: 'DOCKER_HUB_PASSWORD')]){
                      // sh "docker login -u ${dockerHubUser} -p ${DOCKER_HUB_PASSWORD}"
                         
                         // Tag and push the Docker image to Docker Hub
                         //sh "docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}  ${dockerHubUser}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
-                        sh "docker push ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
+                        //sh "docker push ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
 				}
                            }
 			}    
