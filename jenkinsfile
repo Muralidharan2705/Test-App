@@ -1,7 +1,7 @@
 pipeline {
     agent any
 
-    tools {
+   /*  tools {
         /* Use the Maven tool defined in Jenkins Global Tool Configuration */
         maven 'maven'  /* Replace with the name of your Maven installation in Jenkins */
         jdk 'JDK-17'
@@ -12,16 +12,16 @@ pipeline {
         DOCKER_IMAGE_TAG = 'latest'
         dockerHubUser= 'muralidharan2705'
               
-    }
+    } */
 
    stages {
-        stage('Checkout') {
+        /* stage('Checkout') {
             steps {
                 // Checkout code from your repository
                 //git 'https://github.com/Muralidharan2705/Test-App.git'  // Replace with your repo URL
                 sh 'echo passed'
             }
-        }
+        } */
 
         /* stage('Build and Package') {
             steps {
