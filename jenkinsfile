@@ -21,22 +21,19 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout code from your repository
-                //git 'https://github.com/Muralidharan2705/Test-App.git'  // Replace with your repo URL
+                git branch: 'main', url: 'https://github.com/Muralidharan2705/Test-App.git'  // Replace with your repo URL
                 sh 'echo passed'
             }
         }  
-       stage ('sonarqube Analysis') {
-         steps {
-                withSonarQubeEnv('SonarQube')
-                  // sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=myproject  Dsonar.projectKey=myproject  -Dsonar.java.binaries=. '''
-                  sh 'sonar-scanner  -Dsonar.projectKey=my_project  -Dsonar.sources=. -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_LOGIN'
-                }
+      stage('SonarQube analysis') {
+            environment {
+                SCANNER_HOME = tool 'SonarQubeScanner';    
             }
-        
-        stage('Quality Gate') {
+            
             steps {
-                timeout(time: 5, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
+                
+                withSonarQubeEnv('SonarQube') {
+                    sh "${SCANNER_HOME}/bin/sonar-scanner"
                 }
             }
         }
