@@ -11,7 +11,7 @@ pipeline {
         DOCKER_IMAGE_NAME = 'muralidharan2705/my-java-app'
         DOCKER_IMAGE_TAG = 'latest'
         dockerHubUser= 'muralidharan2705'
-       // SCANNER_HOME= tool 'SonarQube'
+       SCANNER_HOME= tool 'SonarQubeScanner'
         // SONAR_HOST_URL = 'http://35.223.93.214:9000/'
         // SONAR_LOGIN = 'sonar-login'
 
@@ -26,14 +26,15 @@ pipeline {
             }
         }  
       stage('SonarQube analysis') {
-            environment {
+          /*  environment {
                 SCANNER_HOME = tool 'SonarQubeScanner';    
-            }
+            } */
             
             steps {
                 
                 withSonarQubeEnv('SonarQube') {
-                    sh "${SCANNER_HOME}/bin/sonar-scanner"
+                  sh "${tool 'maven'}/bin/mvn dependency:copy-dependencies sonar:sonar"
+                    //sh "${SCANNER_HOME}/bin/sonar-scanner"
                 }
             }
         }
