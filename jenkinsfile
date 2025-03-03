@@ -81,7 +81,8 @@ stage('Scan Docker Image') {
                     }
                 }
             }
-   
+
+   }   
       stage('Push Image'){
         environment{
                         DOCKER_HUB = credentials('docker-hub-credentials')
