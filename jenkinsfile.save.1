@@ -1,7 +1,7 @@
 pipeline {
     agent any
    
-     tools {
+/*  tools {
         /* Use the Maven tool defined in Jenkins Global Tool Configuration */
         maven 'maven'  /* Replace with the name of your Maven installation in Jenkins */
         jdk 'JDK-17'
@@ -12,18 +12,18 @@ pipeline {
         DOCKER_IMAGE_TAG = 'latest'
         dockerHubUser= 'muralidharan2705'
 
-    } 
+    } */
 
    stages {
-        stage('Checkout') {
+        /* stage('Checkout') {
             steps {
                 // Checkout code from your repository
                 //git 'https://github.com/Muralidharan2705/Test-App.git'  // Replace with your repo URL
                 sh 'echo passed'
             }
-        } 
+        } */
 
-         stage('Build and Package') {
+        /* stage('Build and Package') {
             steps {
                 script {
                     echo 'Running Maven clean and package...'
@@ -37,18 +37,16 @@ pipeline {
                 archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
             }
         }
-     stage('Build Docker Image') {
+   stages {
+        /* stage('Checkout') {
             steps {
-                script {
-                    // Build the Docker image with the JAR inside
-                    sh '''
-                    docker build -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} .
-                     '''
-                }
+                // Checkout code from your repository
+                //git 'https://github.com/Muralidharan2705/Test-App.git'  // Replace with your repo URL
+                sh 'echo passed'
             }
-        }
-   
-      stage('Push Image'){
+        } */
+
+   stage('Push Image'){
         environment{
                         DOCKER_HUB = credentials('docker-hub-credentials')
              // we created env variable docker hub to read credentials from jenkin
