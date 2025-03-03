@@ -29,10 +29,7 @@ pipeline {
          steps {
                 withSonarQubeEnv('sonarqube')
                   // sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=myproject  Dsonar.projectKey=myproject  -Dsonar.java.binaries=. '''
-                  sh 'sonar-scanner \
-                      -Dsonar.projectKey=my_project \ 
-                      -Dsonar.sources=. \
-                      -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_LOGIN'
+                  sh 'sonar-scanner  -Dsonar.projectKey=my_project  -Dsonar.sources=. -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_LOGIN'
                 }
             }
         
