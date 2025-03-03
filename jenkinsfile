@@ -58,8 +58,7 @@ pipeline {
                sh "docker push muralidharan2705/my-java-app"
             }
         }
-     }
-
+     
     }
 post {
         always {
