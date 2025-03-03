@@ -1,0 +1,105 @@
+pipeline {
+    agent any
+
+   /*  tools {
+        /* Use the Maven tool defined in Jenkins Global Tool Configuration */
+        maven 'maven'  /* Replace with the name of your Maven installation in Jenkins */
+        jdk 'JDK-17'
+    }
+    environment {
+        // Define environment variables
+        DOCKER_IMAGE_NAME = 'muralidharan2705/my-java-app'
+        DOCKER_IMAGE_TAG = 'latest'
+        dockerHubUser= 'muralidharan2705'
+              
+    } */
+
+   stages {
+        /* stage('Checkout') {
+            steps {
+                // Checkout code from your repository
+                //git 'https://github.com/Muralidharan2705/Test-App.git'  // Replace with your repo URL
+                sh 'echo passed'
+            }
+        } */
+
+        /* stage('Build and Package') {
+            steps {
+                script {
+                    echo 'Running Maven clean and package...'
+                    sh "${tool 'maven'}/bin/mvn clean package"  // Corrected command
+                }
+            }
+        }
+
+        stage('Archive Artifacts') {
+            steps {
+                archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    // Build the Docker image with the JAR inside
+                    sh '''
+                    docker build -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} .
+                     '''
+                }
+            }
+        }
+       stage('Docker Login') {
+            steps {
+                script {
+                    // Use the stored Docker access token to login
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')])  {
+                        sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
+                    }
+                }
+            }
+         } 
+        stage ('Push docker image') {
+         steps {
+             scripts {
+                                   
+                       
+                    // sh 'docker login'
+                        
+                      sh "docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}  ${dockerHubUser}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
+                        sh 'docker push ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}'
+			  }
+			}    
+                 }
+        }
+
+
+    post {
+        always {
+           echo 'Cleaning up workspace....'            
+            //cleanWs()
+            
+        }
+
+        success {
+            echo 'Build and packaging completed successfully!'
+        }
+
+        failure {
+            echo 'Build failed. Check the logs for errors!'
+        }
+    }
+} */
+
+
+stage('Push Image'){
+        environment{
+                        DOCKER_HUB = credentials('docker-hub-credentials')
+             // we created env variable docker hub to read credentials from jenkin
+                    }
+            steps{
+               sh 'echo ${DOCKER_HUB_PSW} | docker login -u ${DOCKER_HUB_USR} --password-stdin'
+               sh "docker push muralidharan2705/my-java-app"
+            }
+        }
+
+    }
+}
