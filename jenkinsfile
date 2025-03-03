@@ -23,7 +23,7 @@ pipeline {
             }
         }
 
-        stage('Build and Package') {
+        /* stage('Build and Package') {
             steps {
                 script {
                     echo 'Running Maven clean and package...'
@@ -87,4 +87,18 @@ pipeline {
             echo 'Build failed. Check the logs for errors!'
         }
     }
-}
+} */
+
+
+stage('Push Image'){
+        environment{
+                        DOCKER_HUB = credentials('docker-hub-credentials')
+             // we created env variable docker hub to read credentials from jenkin
+                    }
+            steps{
+               sh 'echo ${DOCKER_HUB_PSW} | docker login -u ${DOCKER_HUB_USR} --password-stdin'
+               sh "docker push muralidharan2705/my-java-app"
+            }
+        }
+
+    }
