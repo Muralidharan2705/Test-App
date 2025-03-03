@@ -11,7 +11,7 @@ pipeline {
         DOCKER_IMAGE_NAME = 'muralidharan2705/my-java-app'
         DOCKER_IMAGE_TAG = 'latest'
         dockerHubUser= 'muralidharan2705'
-        SCANNER_HOME= tool 'sonarqube'
+        SCANNER_HOME= tool 'SonarQube'
         SONAR_HOST_URL = 'http://35.223.93.214:9000/'
         SONAR_LOGIN = 'sonar-login'
 
@@ -27,7 +27,7 @@ pipeline {
         }  
        stage ('sonarqube Analysis') {
          steps {
-                withSonarQubeEnv('sonarqube')
+                withSonarQubeEnv('SonarQube')
                   // sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=myproject  Dsonar.projectKey=myproject  -Dsonar.java.binaries=. '''
                   sh 'sonar-scanner  -Dsonar.projectKey=my_project  -Dsonar.sources=. -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_LOGIN'
                 }
